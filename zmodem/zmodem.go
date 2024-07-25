@@ -3,11 +3,12 @@ package zmodem
 import (
 	"context"
 	"errors"
-	"github.com/xiwh/zmodem/collectionutil"
 	"io"
 	"sync"
 	"sync/atomic"
 	"time"
+
+	"github.com/xiwh/zmodem/collectionutil"
 )
 
 type Status uint8
@@ -239,14 +240,14 @@ func (t *ZModem) release() {
 	if t.status != StatusIdle {
 		t.sendFileEOF = false
 		if t.lastDownloadFile != nil {
-			if t.lastDownloadFile.buf != nil {
-				_ = t.lastDownloadFile.buf.Close()
+			if t.lastDownloadFile.Buf != nil {
+				_ = t.lastDownloadFile.Buf.Close()
 			}
 			t.lastDownloadFile = nil
 		}
 		if t.lastUploadFile != nil {
-			if t.lastUploadFile.buf != nil {
-				_ = t.lastUploadFile.buf.Close()
+			if t.lastUploadFile.Buf != nil {
+				_ = t.lastUploadFile.Buf.Close()
 			}
 			t.lastUploadFile = nil
 		}
