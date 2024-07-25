@@ -37,7 +37,7 @@ func (t *ZModem) handleReceive() {
 				return
 			}
 			t.consumer.OnCheckDownload(&file)
-			if file.isSkip {
+			if file.IsSkip {
 				t.lastDownloadFile = nil
 				//是否跳过
 				err = t.sendFrame(newHexFrame(ZSKIP, DEFAULT_HEADER_DATA))
@@ -64,7 +64,7 @@ func (t *ZModem) handleReceive() {
 				return
 			}
 			buf := byteutil.NewBlockReadWriterBuf(make([]byte, 0, 0x2fff), int64(t.lastDownloadFile.Size))
-			t.lastDownloadFile.buf = buf
+			t.lastDownloadFile.Buf = buf
 			go func() {
 				err := t.consumer.OnDownload(t.lastDownloadFile, buf)
 				if err != nil {

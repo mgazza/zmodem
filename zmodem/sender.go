@@ -2,8 +2,9 @@ package zmodem
 
 import (
 	"encoding/binary"
-	"github.com/xiwh/zmodem/myioutil"
 	"io"
+
+	"github.com/xiwh/zmodem/myioutil"
 )
 
 func (t *ZModem) handleSend() {
@@ -79,7 +80,7 @@ func (t *ZModem) handleSend() {
 					err = t.sendSubPacket(newSubPacket(ZCRCG, p), ZBIN, false)
 				}
 				return
-			}), t.lastUploadFile.buf, 8096)
+			}), t.lastUploadFile.Buf, 8096)
 
 			if err != nil && err != io.EOF {
 				//非正常关闭
@@ -99,7 +100,7 @@ func (t *ZModem) handleSend() {
 			}
 			t.consumer.OnUploadSkip(t.lastUploadFile)
 			err = t.sendFrame(newHexFrame(ZFIN, DEFAULT_HEADER_DATA))
-			_ = t.lastUploadFile.buf.Close()
+			_ = t.lastUploadFile.Buf.Close()
 			t.lastDownloadFile = nil
 		case ZFIN:
 			//完成

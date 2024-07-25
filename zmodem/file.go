@@ -2,13 +2,14 @@ package zmodem
 
 import (
 	"errors"
-	"github.com/xiwh/zmodem/byteutil"
-	"golang.org/x/exp/slices"
 	"io"
 	"os"
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/xiwh/zmodem/byteutil"
+	"golang.org/x/exp/slices"
 )
 
 type ZModemFile struct {
@@ -19,12 +20,12 @@ type ZModemFile struct {
 	No       int    `json:"no"`
 	RemFiles int    `json:"remFiles"`
 	RemSize  int    `json:"remSize"`
-	isSkip   bool
-	buf      io.ReadWriteCloser
+	IsSkip   bool
+	Buf      io.ReadWriteCloser
 }
 
 func (t *ZModemFile) Skip() {
-	t.isSkip = true
+	t.IsSkip = true
 }
 
 func (t *ZModemFile) marshal() []byte {
@@ -56,8 +57,8 @@ func NewZModemFile(filename string, size int) (*ZModemFile, io.WriteCloser) {
 		No:       0,
 		RemSize:  size,
 		RemFiles: 1,
-		isSkip:   false,
-		buf:      buf,
+		IsSkip:   false,
+		Buf:      buf,
 	}, buf
 }
 
@@ -78,8 +79,8 @@ func NewZModemLocalFile(path string) (*ZModemFile, error) {
 		No:       0,
 		RemSize:  int(stat.Size()),
 		RemFiles: 1,
-		isSkip:   false,
-		buf:      file,
+		IsSkip:   false,
+		Buf:      file,
 	}, nil
 }
 
